@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SignInSide from './auths/sign';
+import NavRoute from './routes';
 
 function App() {
   return (
     <div className="App">
-      <SignInSide />
+      <NavRoute />
     </div>
   );
 }

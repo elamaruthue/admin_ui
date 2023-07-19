@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 
-export default function SignInSide() {
+export default function SignIn() {
   const handleSubmit = (event : any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
