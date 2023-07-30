@@ -1,4 +1,4 @@
-export function Default(params: any) {
+export function Default() {
     return (
         <h3>
             Page not found

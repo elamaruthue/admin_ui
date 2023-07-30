@@ -26,6 +26,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import ResponsiveAppBar from './appbar';
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -143,7 +144,7 @@ export default function SideBar() {
       <Drawer 
       PaperProps={{
         sx: {
-          backgroundColor: '#6200efed',          
+          backgroundColor: '#b101c1',          
         }
       }}
       variant="permanent" open={open}>
@@ -154,7 +155,7 @@ export default function SideBar() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Employees', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block',":hover":{
                 backgroundColor:'#fff',
                 borderBottomRightRadius:50,
@@ -162,6 +163,8 @@ export default function SideBar() {
             color:'#000'
               } }}>
               <ListItemButton
+              component={Link}
+              to={"/employee"}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -191,7 +194,7 @@ export default function SideBar() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        
+        <Outlet />
       </Box>
     </Box>
   );

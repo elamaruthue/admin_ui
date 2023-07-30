@@ -1,12 +1,6 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import { login } from '../../apis/login';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { login } from '../../apis/login'; // Assuming you have an API function for login
 import { LOGIN } from '../actions/login';
-
-const initialState = {
-	loading : false,
-    data : null,
-    error:false
-};
 
 export const logIn = createAsyncThunk(
 	LOGIN,
@@ -17,26 +11,43 @@ export const logIn = createAsyncThunk(
 	},
 );
 
-
 export const loginSlice = createSlice({
-	name: 'login',
-	initialState,
-	extraReducers: {
-		[logIn.pending.type]: state => {
-			state.loading = true;
-			state.error = false;
-		},
-		[logIn.rejected.type]: (state, action) => {
-			state.loading = false;
-			state.error = action?.error?.message;
-		},
-		[logIn.fulfilled.type]: (state, action) => {
-			state.loading = false;
-            state.data = action.payload
-		},
-		
-	},
+  name: 'login',
+  initialState: {
+    loading: false,
+    error: null,
+    data: null,
+  },
+  reducers: {
+    loginStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    loginSuccess: (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+    },
+    loginFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(logIn.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logIn.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(logIn.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'An error occurred.';
+      });
+  },
 });
 
-// export const {logIn} = loginSlice.actions;
+export const { loginStart, loginSuccess, loginFailure } = loginSlice.actions;
 export default loginSlice.reducer;
