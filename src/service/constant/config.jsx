@@ -5,5 +5,9 @@ BASE_URL = 'http://theboys-001-site1.gtempurl.com/api/';
 export const URL ={
     Login : 'Admin/AdminLogin',
     GetEmployee :'Employee/GetEmployees',
-    AddEmployee:'Employee/AddEmployees'
+    AddEmployee:'Employee/AddEmployees',
+    GetSupervisor:'Supervisor/getsupervisor',
+    GetMaterial:'Material/getmaterial',
+    GetSite:'Sites/GetSites',
+    GetSalary:'SalaryDetails/GetSalary',
 }

@@ -3,13 +3,9 @@ import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
@@ -18,15 +14,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import AdbIcon from '@mui/icons-material/Adb';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import ResponsiveAppBar from './appbar';
 import { Outlet, Link, useNavigate } from "react-router-dom";
+import { allremoveElement } from '../utils/localStore';
+import { IconButton } from '@mui/material';
+import { logout, verifyAuth } from '../service/redux/type/login';
+import { dispatch } from '../service/store/store';
 
 const drawerWidth = 240;
 
@@ -97,14 +90,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 export default function SideBar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const navigate = useNavigate()
   const handleDrawerOpen = () => {
     setOpen(pre => !pre);
   };
@@ -119,7 +108,11 @@ export default function SideBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleCloseUserMenu = (e) => {
+    if(e === 'Logout'){
+      dispatch(logout())
+    }
     setAnchorElUser(null);
   };
 
@@ -132,7 +125,7 @@ export default function SideBar() {
       handleOpenUserMenu={handleOpenUserMenu}anchorElUser={anchorElUser}handleCloseUserMenu={handleCloseUserMenu}
       />
     )
-  },[anchorElUser, open])
+  },[anchorElUser, handleCloseUserMenu, open])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -164,7 +157,7 @@ export default function SideBar() {
               } }}>
               <ListItemButton
               component={Link}
-              to={"/employee"}
+              to={index === 0 ?"" : "supervisor"}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',

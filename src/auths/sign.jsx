@@ -11,23 +11,32 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { logIn } from "../service/redux/type/login";
 import { dispatch } from "../service/store/store";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import SetupIcon from '../assets/elamaruthu.jpg'
 export default function SignIn() {
-  const handleSubmit =async (event) => {
+  const {data} = useSelector(({login})=>login)
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    let payLoad = {
       userName: data.get("email"),
       password: data.get("password"),
-    });
-    let payLoad ={
-      userName: data.get("email"),
-      password: data.get("password"),
-    }
- let res = await dispatch(logIn(payLoad))
- console.log('res',res);
+    };
+    // let res = await dispatch(logIn(payLoad));
+    // console.log("res", res);
   };
-
+  console.log('data',data);
+  useEffect(() => {
+    if (data) {
+      // setTimeout(() => setShowLoader(true), 3000);
+      navigate("/employee");
+    } else {
+      navigate("/");
+    }
+  }, [data]);
   return (
     <Container component="main" maxWidth="lg">
       <Box

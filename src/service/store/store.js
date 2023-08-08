@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit'; // Correct import path for combineReducers
 import { emplyeeSlice } from '../redux/type/employee';
 import { loginSlice } from '../redux/type/login';
+import { supervisorSlice } from '../redux/type/supervisor';
 
 const reducers = combineReducers({
   login: loginSlice.reducer, // Access the reducer property of the loginSlice
-  emplyee:emplyeeSlice.reducer
+  emplyee:emplyeeSlice.reducer,
+  supervisor:supervisorSlice.reducer
 });
 
 const rootReducer = (state, action) => {
